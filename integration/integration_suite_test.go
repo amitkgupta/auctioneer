@@ -100,6 +100,7 @@ func startSimulationRep(simulationRepPath, guid string, stack string, natsPort i
 		simulationRepPath,
 		"-repGuid", guid,
 		"-natsAddrs", fmt.Sprintf("127.0.0.1:%d", natsPort),
+		"-azNumber", "0",
 	), GinkgoWriter, GinkgoWriter)
 	Ω(err).ShouldNot(HaveOccurred())
 

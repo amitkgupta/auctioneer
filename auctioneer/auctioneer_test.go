@@ -268,7 +268,7 @@ var _ = Describe("Auctioneer", func() {
 
 				Context("when the auction fails", func() {
 					BeforeEach(func() {
-						runner.RunLRPStartAuctionReturns(auctiontypes.StartAuctionResult{}, errors.New("the auction failed"))
+						runner.RunLRPStartAuctionReturns = auctiontypes.StartAuctionResult{Error: errors.New("the auction failed")}
 					})
 
 					It("should log that the auction failed and nontheless resolve the auction", func() {
@@ -321,9 +321,9 @@ var _ = Describe("Auctioneer", func() {
 
 		BeforeEach(func() {
 			runner = &fake_auctionrunner.FakeAuctionRunner{}
-			runner.RunLRPStartAuctionStub = func(auctionRequest auctiontypes.StartAuctionRequest) (auctiontypes.StartAuctionResult, error) {
+			runner.RunLRPStartAuctionStub = func(auctionRequest auctiontypes.StartAuctionRequest) auctiontypes.StartAuctionResult {
 				time.Sleep(time.Second)
-				return auctiontypes.StartAuctionResult{}, nil
+				return auctiontypes.StartAuctionResult{}
 			}
 
 			auctioneer = New(bbs, runner, 2, MAX_AUCTION_ROUNDS_FOR_TEST, time.Second, logger)
@@ -420,7 +420,7 @@ var _ = Describe("Auctioneer", func() {
 
 				Context("when the auction fails", func() {
 					BeforeEach(func() {
-						runner.RunLRPStopAuctionReturns(auctiontypes.StopAuctionResult{}, errors.New("the auction failed"))
+						runner.RunLRPStopAuctionReturns = auctiontypes.StopAuctionResult{Error: errors.New("the auction failed")}
 					})
 
 					It("should log that the auction failed and nontheless resolve the auction", func() {

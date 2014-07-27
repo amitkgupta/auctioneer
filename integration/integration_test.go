@@ -26,6 +26,8 @@ var _ = Describe("Integration", func() {
 				Stack:        lucidStack,
 				Index:        0,
 				Actions:      dummyActions,
+				NumInstances: 2,
+				NumAZs:       4,
 			})
 
 			bbs.RequestLRPStartAuction(models.LRPStartAuction{
@@ -36,6 +38,8 @@ var _ = Describe("Integration", func() {
 				Stack:        lucidStack,
 				Index:        1,
 				Actions:      dummyActions,
+				NumInstances: 2,
+				NumAZs:       4,
 			})
 		})
 
@@ -58,6 +62,8 @@ var _ = Describe("Integration", func() {
 				Stack:        lucidStack,
 				Index:        0,
 				Actions:      dummyActions,
+				NumInstances: 1,
+				NumAZs:       4,
 			})
 
 			Eventually(bbs.GetAllLRPStartAuctions).Should(HaveLen(0))
@@ -70,6 +76,8 @@ var _ = Describe("Integration", func() {
 				Stack:        lucidStack,
 				Index:        0,
 				Actions:      dummyActions,
+				NumInstances: 1,
+				NumAZs:       4,
 			})
 
 			Eventually(bbs.GetAllLRPStartAuctions).Should(HaveLen(0))
@@ -82,6 +90,8 @@ var _ = Describe("Integration", func() {
 				Stack:        lucidStack,
 				Index:        0,
 				Actions:      dummyActions,
+				NumInstances: 1,
+				NumAZs:       4,
 			})
 
 			Eventually(bbs.GetAllLRPStartAuctions).Should(HaveLen(0))
@@ -91,8 +101,10 @@ var _ = Describe("Integration", func() {
 
 		It("should stop all but one instance of the app", func() {
 			bbs.RequestLRPStopAuction(models.LRPStopAuction{
-				ProcessGuid: "app-guid",
-				Index:       0,
+				ProcessGuid:  "app-guid",
+				Index:        0,
+				NumInstances: 0,
+				NumAZs:       4,
 			})
 
 			Eventually(func() interface{} {
