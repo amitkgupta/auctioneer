@@ -14,6 +14,7 @@ var _ = Describe("LRPStartAuction", func() {
     "process_guid":"some-guid",
     "instance_guid":"some-instance-guid",
     "stack":"some-stack",
+    "num_instances":3,
     "memory_mb" : 128,
     "disk_mb" : 512,
     "ports": [
@@ -37,6 +38,7 @@ var _ = Describe("LRPStartAuction", func() {
       "index": 42
     },
     "index": 2,
+    "num_azs":4,
     "updated_at": 1138,
     "state": 1
   }`
@@ -48,6 +50,7 @@ var _ = Describe("LRPStartAuction", func() {
 			ProcessGuid:  "some-guid",
 			InstanceGuid: "some-instance-guid",
 			Stack:        "some-stack",
+			NumInstances: 3,
 			MemoryMB:     128,
 			DiskMB:       512,
 			Ports: []PortMapping{
@@ -70,6 +73,7 @@ var _ = Describe("LRPStartAuction", func() {
 				Index:      &index,
 			},
 			Index:     2,
+			NumAZs:    4,
 			State:     LRPStartAuctionStatePending,
 			UpdatedAt: 1138,
 		}

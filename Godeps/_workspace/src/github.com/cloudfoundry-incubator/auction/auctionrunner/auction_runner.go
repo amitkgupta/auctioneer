@@ -26,7 +26,7 @@ func New(client auctiontypes.RepPoolClient) *auctionRunner {
 	}
 }
 
-func (a *auctionRunner) RunLRPStartAuction(auctionRequest auctiontypes.StartAuctionRequest) (auctiontypes.StartAuctionResult, error) {
+func (a *auctionRunner) RunLRPStartAuction(auctionRequest auctiontypes.StartAuctionRequest) auctiontypes.StartAuctionResult {
 	result := auctiontypes.StartAuctionResult{
 		LRPStartAuction: auctionRequest.LRPStartAuction,
 	}
@@ -51,21 +51,20 @@ func (a *auctionRunner) RunLRPStartAuction(auctionRequest auctiontypes.StartAuct
 	result.BiddingDuration = time.Since(t)
 
 	if result.Winner == "" {
-		return result, auctiontypes.InsufficientResources
+		result.Error = auctiontypes.InsufficientResources
 	}
 
-	return result, nil
+	return result
 }
 
-func (a *auctionRunner) RunLRPStopAuction(auctionRequest auctiontypes.StopAuctionRequest) (auctiontypes.StopAuctionResult, error) {
+func (a *auctionRunner) RunLRPStopAuction(auctionRequest auctiontypes.StopAuctionRequest) auctiontypes.StopAuctionResult {
 	result := auctiontypes.StopAuctionResult{
 		LRPStopAuction: auctionRequest.LRPStopAuction,
 	}
 
-	var err error
 	t := time.Now()
-	result.Winner, result.NumCommunications, err = stopAuction(a.client, auctionRequest)
+	result.Winner, result.NumCommunications, result.Error = stopAuction(a.client, auctionRequest)
 	result.BiddingDuration = time.Since(t)
 
-	return result, err
+	return result
 }

@@ -29,7 +29,7 @@ type FakeNsyncBBS struct {
 	GetAllDesiredLRPsStub        func() ([]models.DesiredLRP, error)
 	getAllDesiredLRPsMutex       sync.RWMutex
 	getAllDesiredLRPsArgsForCall []struct{}
-	getAllDesiredLRPsReturns struct {
+	getAllDesiredLRPsReturns     struct {
 		result1 []models.DesiredLRP
 		result2 error
 	}

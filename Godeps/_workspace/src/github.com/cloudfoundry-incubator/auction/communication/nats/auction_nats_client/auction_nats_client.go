@@ -38,6 +38,11 @@ func New(natsClient yagnats.NATSClient, timeout time.Duration, runTimeout time.D
 	}, nil
 }
 
+// TODO: do this better
+func (rep *AuctionNATSClient) AZNumber(repGuid string) int {
+	return 1
+}
+
 func (rep *AuctionNATSClient) BidForStartAuction(repGuids []string, startAuctionInfo auctiontypes.StartAuctionInfo) auctiontypes.StartAuctionBids {
 	bidLog := rep.logger.Session("start-bid", lager.Data{
 		"start-auction-info": startAuctionInfo,

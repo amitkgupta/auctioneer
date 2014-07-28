@@ -13,16 +13,20 @@ var _ = Describe("LRPStopAuction", func() {
 	stopAuctionPayload := `{
     "process_guid":"some-guid",
     "index": 2,
+    "num_instances":2,
+    "num_azs":4,
     "updated_at": 1138,
     "state": 1
   }`
 
 	BeforeEach(func() {
 		stopAuction = LRPStopAuction{
-			ProcessGuid: "some-guid",
-			Index:       2,
-			State:       LRPStopAuctionStatePending,
-			UpdatedAt:   1138,
+			ProcessGuid:  "some-guid",
+			Index:        2,
+			NumInstances: 2,
+			NumAZs:       4,
+			State:        LRPStopAuctionStatePending,
+			UpdatedAt:    1138,
 		}
 	})
 	Describe("ToJSON", func() {

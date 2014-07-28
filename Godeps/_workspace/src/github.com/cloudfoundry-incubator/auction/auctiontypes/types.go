@@ -13,8 +13,8 @@ var NothingToStop = errors.New("found nothing to stop")
 
 //AuctionRunner
 type AuctionRunner interface {
-	RunLRPStartAuction(auctionRequest StartAuctionRequest) (StartAuctionResult, error)
-	RunLRPStopAuction(auctionRequest StopAuctionRequest) (StopAuctionResult, error)
+	RunLRPStartAuction(auctionRequest StartAuctionRequest) StartAuctionResult
+	RunLRPStopAuction(auctionRequest StopAuctionRequest) StopAuctionResult
 }
 
 type StartAuctionRequest struct {
@@ -30,6 +30,7 @@ type StartAuctionResult struct {
 	NumCommunications int
 	BiddingDuration   time.Duration
 	Duration          time.Duration
+	Error             error
 }
 
 type StopAuctionRequest struct {
@@ -43,6 +44,7 @@ type StopAuctionResult struct {
 	NumCommunications int
 	BiddingDuration   time.Duration
 	Duration          time.Duration
+	Error             error
 }
 
 type StartAuctionRules struct {
@@ -68,6 +70,7 @@ type AuctionRepDelegate interface {
 	TotalResources() (Resources, error)
 	NumInstancesForProcessGuid(processGuid string) (int, error)
 	InstanceGuidsForProcessGuidAndIndex(processGuid string, index int) ([]string, error)
+	AZNumber() int
 
 	Reserve(startAuctionInfo StartAuctionInfo) error
 	ReleaseReservation(startAuctionInfo StartAuctionInfo) error
@@ -83,6 +86,7 @@ type SimulationRepPoolClient interface {
 	SimulatedInstances(repGuid string) []SimulatedInstance
 	SetSimulatedInstances(repGuid string, instances []SimulatedInstance)
 	Reset(repGuid string)
+	AZNumber(repGuid string) int
 }
 
 //simulation-only interface
@@ -99,13 +103,17 @@ func NewStartAuctionInfoFromLRPStartAuction(auction models.LRPStartAuction) Star
 		DiskMB:       auction.DiskMB,
 		MemoryMB:     auction.MemoryMB,
 		Index:        auction.Index,
+		NumInstances: auction.NumInstances,
+		NumAZs:       auction.NumAZs,
 	}
 }
 
 func NewStopAuctionInfoFromLRPStopAuction(auction models.LRPStopAuction) StopAuctionInfo {
 	return StopAuctionInfo{
-		ProcessGuid: auction.ProcessGuid,
-		Index:       auction.Index,
+		ProcessGuid:  auction.ProcessGuid,
+		Index:        auction.Index,
+		NumInstances: auction.NumInstances,
+		NumAZs:       auction.NumAZs,
 	}
 }
 
@@ -138,6 +146,8 @@ type StartAuctionInfo struct {
 	DiskMB       int
 	MemoryMB     int
 	Index        int
+	NumInstances int
+	NumAZs       int
 }
 
 func (info StartAuctionInfo) LRPIdentifier() models.LRPIdentifier {
@@ -149,8 +159,10 @@ func (info StartAuctionInfo) LRPIdentifier() models.LRPIdentifier {
 }
 
 type StopAuctionInfo struct {
-	ProcessGuid string
-	Index       int
+	ProcessGuid  string
+	Index        int
+	NumInstances int
+	NumAZs       int
 }
 
 type SimulatedInstance struct {

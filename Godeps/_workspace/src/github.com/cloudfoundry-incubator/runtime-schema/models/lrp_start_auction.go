@@ -15,6 +15,7 @@ type LRPStartAuction struct {
 	InstanceGuid string           `json:"instance_guid"`
 	Stack        string           `json:"stack"`
 	Actions      []ExecutorAction `json:"actions"`
+	NumInstances int              `json:"num_instances"`
 
 	DiskMB   int `json:"disk_mb"`
 	MemoryMB int `json:"memory_mb"`
@@ -23,6 +24,8 @@ type LRPStartAuction struct {
 	Ports []PortMapping `json:"ports"`
 
 	Index int `json:"index"`
+
+	NumAZs int `json:"num_azs"`
 
 	State     LRPStartAuctionState `json:"state"`
 	UpdatedAt int64                `json:"updated_at"`
