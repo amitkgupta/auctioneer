@@ -19,26 +19,32 @@ var _ = Describe("Integration", func() {
 	Context("when a start auction message arrives", func() {
 		BeforeEach(func() {
 			bbs.RequestLRPStartAuction(models.LRPStartAuction{
-				ProcessGuid:  "app-guid",
+				DesiredLRP: models.DesiredLRP{
+					ProcessGuid: "app-guid",
+					DiskMB:      1,
+					MemoryMB:    1,
+					Stack:       lucidStack,
+					Actions:     dummyActions,
+					Instances:   2,
+				},
+
 				InstanceGuid: "instance-guid-1",
-				DiskMB:       1,
-				MemoryMB:     1,
-				Stack:        lucidStack,
 				Index:        0,
-				Actions:      dummyActions,
-				NumInstances: 2,
 				NumAZs:       4,
 			})
 
 			bbs.RequestLRPStartAuction(models.LRPStartAuction{
-				ProcessGuid:  "app-guid",
+				DesiredLRP: models.DesiredLRP{
+					ProcessGuid: "app-guid",
+					DiskMB:      1,
+					MemoryMB:    1,
+					Stack:       lucidStack,
+					Actions:     dummyActions,
+					Instances:   2,
+				},
+
 				InstanceGuid: "instance-guid-2",
-				DiskMB:       1,
-				MemoryMB:     1,
-				Stack:        lucidStack,
 				Index:        1,
-				Actions:      dummyActions,
-				NumInstances: 2,
 				NumAZs:       4,
 			})
 		})
@@ -55,42 +61,51 @@ var _ = Describe("Integration", func() {
 	Context("when a stop auction message arrives", func() {
 		BeforeEach(func() {
 			bbs.RequestLRPStartAuction(models.LRPStartAuction{
-				ProcessGuid:  "app-guid",
+				DesiredLRP: models.DesiredLRP{
+					ProcessGuid: "app-guid",
+					DiskMB:      1,
+					MemoryMB:    1,
+					Stack:       lucidStack,
+					Actions:     dummyActions,
+					Instances:   1,
+				},
+
 				InstanceGuid: "duplicate-instance-guid-1",
-				DiskMB:       1,
-				MemoryMB:     1,
-				Stack:        lucidStack,
 				Index:        0,
-				Actions:      dummyActions,
-				NumInstances: 1,
 				NumAZs:       4,
 			})
 
 			Eventually(bbs.GetAllLRPStartAuctions).Should(HaveLen(0))
 
 			bbs.RequestLRPStartAuction(models.LRPStartAuction{
-				ProcessGuid:  "app-guid",
+				DesiredLRP: models.DesiredLRP{
+					ProcessGuid: "app-guid",
+					DiskMB:      1,
+					MemoryMB:    1,
+					Stack:       lucidStack,
+					Actions:     dummyActions,
+					Instances:   1,
+				},
+
 				InstanceGuid: "duplicate-instance-guid-2",
-				DiskMB:       1,
-				MemoryMB:     1,
-				Stack:        lucidStack,
 				Index:        0,
-				Actions:      dummyActions,
-				NumInstances: 1,
 				NumAZs:       4,
 			})
 
 			Eventually(bbs.GetAllLRPStartAuctions).Should(HaveLen(0))
 
 			bbs.RequestLRPStartAuction(models.LRPStartAuction{
-				ProcessGuid:  "app-guid",
+				DesiredLRP: models.DesiredLRP{
+					ProcessGuid: "app-guid",
+					DiskMB:      1,
+					MemoryMB:    1,
+					Stack:       lucidStack,
+					Actions:     dummyActions,
+					Instances:   1,
+				},
+
 				InstanceGuid: "duplicate-instance-guid-3",
-				DiskMB:       1,
-				MemoryMB:     1,
-				Stack:        lucidStack,
 				Index:        0,
-				Actions:      dummyActions,
-				NumInstances: 1,
 				NumAZs:       4,
 			})
 

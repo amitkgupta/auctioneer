@@ -96,12 +96,13 @@ type SimulationAuctionRepDelegate interface {
 
 func NewStartAuctionInfoFromLRPStartAuction(auction models.LRPStartAuction) StartAuctionInfo {
 	return StartAuctionInfo{
-		ProcessGuid:  auction.ProcessGuid,
+		ProcessGuid: auction.DesiredLRP.ProcessGuid,
+		DiskMB:      auction.DesiredLRP.DiskMB,
+		MemoryMB:    auction.DesiredLRP.MemoryMB,
+
 		InstanceGuid: auction.InstanceGuid,
-		DiskMB:       auction.DiskMB,
-		MemoryMB:     auction.MemoryMB,
 		Index:        auction.Index,
-		NumInstances: auction.NumInstances,
+		NumInstances: auction.DesiredLRP.Instances,
 		NumAZs:       auction.NumAZs,
 	}
 }
