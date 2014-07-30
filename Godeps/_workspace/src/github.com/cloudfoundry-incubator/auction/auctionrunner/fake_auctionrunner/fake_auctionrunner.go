@@ -7,21 +7,27 @@ import (
 )
 
 type FakeAuctionRunner struct {
-	RunLRPStartAuctionStub        func(auctionRequest StartAuctionRequest) StartAuctionResult
+	RunLRPStartAuctionStub        func(auctionRequest StartAuctionRequest) (StartAuctionResult, error)
 	runLRPStartAuctionMutex       sync.RWMutex
 	runLRPStartAuctionArgsForCall []struct {
 		arg1 StartAuctionRequest
 	}
-	RunLRPStartAuctionReturns    StartAuctionResult
-	RunLRPStopAuctionStub        func(auctionRequest StopAuctionRequest) StopAuctionResult
+	runLRPStartAuctionReturns struct {
+		result1 StartAuctionResult
+		result2 error
+	}
+	RunLRPStopAuctionStub        func(auctionRequest StopAuctionRequest) (StopAuctionResult, error)
 	runLRPStopAuctionMutex       sync.RWMutex
 	runLRPStopAuctionArgsForCall []struct {
 		arg1 StopAuctionRequest
 	}
-	RunLRPStopAuctionReturns StopAuctionResult
+	runLRPStopAuctionReturns struct {
+		result1 StopAuctionResult
+		result2 error
+	}
 }
 
-func (fake *FakeAuctionRunner) RunLRPStartAuction(arg1 StartAuctionRequest) StartAuctionResult {
+func (fake *FakeAuctionRunner) RunLRPStartAuction(arg1 StartAuctionRequest) (StartAuctionResult, error) {
 	fake.runLRPStartAuctionMutex.Lock()
 	defer fake.runLRPStartAuctionMutex.Unlock()
 	fake.runLRPStartAuctionArgsForCall = append(fake.runLRPStartAuctionArgsForCall, struct {
@@ -30,7 +36,7 @@ func (fake *FakeAuctionRunner) RunLRPStartAuction(arg1 StartAuctionRequest) Star
 	if fake.RunLRPStartAuctionStub != nil {
 		return fake.RunLRPStartAuctionStub(arg1)
 	} else {
-		return fake.RunLRPStartAuctionReturns
+		return fake.runLRPStartAuctionReturns.result1, fake.runLRPStartAuctionReturns.result2
 	}
 }
 
@@ -46,7 +52,14 @@ func (fake *FakeAuctionRunner) RunLRPStartAuctionArgsForCall(i int) StartAuction
 	return fake.runLRPStartAuctionArgsForCall[i].arg1
 }
 
-func (fake *FakeAuctionRunner) RunLRPStopAuction(arg1 StopAuctionRequest) StopAuctionResult {
+func (fake *FakeAuctionRunner) RunLRPStartAuctionReturns(result1 StartAuctionResult, result2 error) {
+	fake.runLRPStartAuctionReturns = struct {
+		result1 StartAuctionResult
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeAuctionRunner) RunLRPStopAuction(arg1 StopAuctionRequest) (StopAuctionResult, error) {
 	fake.runLRPStopAuctionMutex.Lock()
 	defer fake.runLRPStopAuctionMutex.Unlock()
 	fake.runLRPStopAuctionArgsForCall = append(fake.runLRPStopAuctionArgsForCall, struct {
@@ -55,7 +68,7 @@ func (fake *FakeAuctionRunner) RunLRPStopAuction(arg1 StopAuctionRequest) StopAu
 	if fake.RunLRPStopAuctionStub != nil {
 		return fake.RunLRPStopAuctionStub(arg1)
 	} else {
-		return fake.RunLRPStopAuctionReturns
+		return fake.runLRPStopAuctionReturns.result1, fake.runLRPStopAuctionReturns.result2
 	}
 }
 
@@ -69,6 +82,13 @@ func (fake *FakeAuctionRunner) RunLRPStopAuctionArgsForCall(i int) StopAuctionRe
 	fake.runLRPStopAuctionMutex.RLock()
 	defer fake.runLRPStopAuctionMutex.RUnlock()
 	return fake.runLRPStopAuctionArgsForCall[i].arg1
+}
+
+func (fake *FakeAuctionRunner) RunLRPStopAuctionReturns(result1 StopAuctionResult, result2 error) {
+	fake.runLRPStopAuctionReturns = struct {
+		result1 StopAuctionResult
+		result2 error
+	}{result1, result2}
 }
 
 var _ AuctionRunner = new(FakeAuctionRunner)

@@ -7,19 +7,19 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/cloudfoundry-incubator/auction/auctionrunner",
-			"Rev": "befbe26e31700be0ca89b12380d5c8234a6afe93"
+			"Rev": "df7f8c7b76d698324245f98d0bddf1633be27b42"
 		},
 		{
 			"ImportPath": "github.com/cloudfoundry-incubator/auction/auctiontypes",
-			"Rev": "befbe26e31700be0ca89b12380d5c8234a6afe93"
+			"Rev": "df7f8c7b76d698324245f98d0bddf1633be27b42"
 		},
 		{
 			"ImportPath": "github.com/cloudfoundry-incubator/auction/communication/nats",
-			"Rev": "befbe26e31700be0ca89b12380d5c8234a6afe93"
+			"Rev": "df7f8c7b76d698324245f98d0bddf1633be27b42"
 		},
 		{
 			"ImportPath": "github.com/cloudfoundry-incubator/auction/util",
-			"Rev": "befbe26e31700be0ca89b12380d5c8234a6afe93"
+			"Rev": "df7f8c7b76d698324245f98d0bddf1633be27b42"
 		},
 		{
 			"ImportPath": "github.com/cloudfoundry-incubator/cf-lager",

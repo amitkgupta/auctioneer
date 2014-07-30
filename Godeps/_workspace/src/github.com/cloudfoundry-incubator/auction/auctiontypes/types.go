@@ -13,8 +13,8 @@ var NothingToStop = errors.New("found nothing to stop")
 
 //AuctionRunner
 type AuctionRunner interface {
-	RunLRPStartAuction(auctionRequest StartAuctionRequest) StartAuctionResult
-	RunLRPStopAuction(auctionRequest StopAuctionRequest) StopAuctionResult
+	RunLRPStartAuction(auctionRequest StartAuctionRequest) (StartAuctionResult, error)
+	RunLRPStopAuction(auctionRequest StopAuctionRequest) (StopAuctionResult, error)
 }
 
 type StartAuctionRequest struct {
@@ -30,7 +30,6 @@ type StartAuctionResult struct {
 	NumCommunications int
 	BiddingDuration   time.Duration
 	Duration          time.Duration
-	Error             error
 }
 
 type StopAuctionRequest struct {
@@ -44,7 +43,6 @@ type StopAuctionResult struct {
 	NumCommunications int
 	BiddingDuration   time.Duration
 	Duration          time.Duration
-	Error             error
 }
 
 type StartAuctionRules struct {
