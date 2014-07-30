@@ -187,7 +187,7 @@ func (a *Auctioneer) runStartAuction(startAuction models.LRPStartAuction, logger
 		Rules:           rules,
 	}
 
-	err = a.runner.RunLRPStartAuction(request).Error
+	_, err = a.runner.RunLRPStartAuction(request)
 	if err != nil {
 		logger.Error("auction-failed", err)
 		return
@@ -241,7 +241,7 @@ func (a *Auctioneer) runStopAuction(stopAuction models.LRPStopAuction, logger la
 		LRPStopAuction: stopAuction,
 		RepGuids:       executorGuids,
 	}
-	err = a.runner.RunLRPStopAuction(request).Error
+	_, err = a.runner.RunLRPStopAuction(request)
 
 	if err != nil {
 		logger.Error("auction-failed", err)
